@@ -1,0 +1,9 @@
+.menu-content-wrap{
+	padding-top:0.75rem;
+	padding-bottom:0.75rem;
+	/* 下部枠線 */
+	border-bottom:1px solid grey;
+}
+.menu-content{
+	margin-left:1rem;
+}

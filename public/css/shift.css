@@ -1,0 +1,35 @@
+/* テーブル全体 */
+table{
+	table-layout:fixed;
+}
+/* 曜日 */
+tr:nth-of-type(1) td{
+	text-align:center;
+	/* フォント */
+	font-size:0.75rem;
+}
+tr:nth-of-type(1) td:nth-of-type(1){
+	color: red;
+}
+tr:nth-of-type(1) td:nth-of-type(7){
+	color: blue;
+}
+/* 日付 */
+th{
+	padding:0 4px !important;
+}
+tr:nth-of-type(5n+2) th:nth-of-type(1){
+	color: red;
+}
+tr:nth-of-type(5n+2) th:nth-of-type(7){
+	color: blue;
+}
+/* 従業員の氏名を挿入する場所 */
+tr:nth-of-type(n+2) td{
+	padding:0 4px !important;
+	height:18px;
+	border-top:1px solid white;
+	/* フォント */
+	font-size:0.75rem;
+	color:white;
+}

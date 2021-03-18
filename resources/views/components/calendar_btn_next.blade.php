@@ -1,0 +1,1 @@
+<button type="button" class="btn btn-outline-secondary rounded-circle" id="next" style="width:38px;"><i class="fas fa-caret-right" style="color:#198754;"></i></button>
