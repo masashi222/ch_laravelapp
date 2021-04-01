@@ -1,0 +1,7 @@
+.staff-add-window{
+	display: none;
+}
+
+select {
+	cursor: pointer;
+}

@@ -1,0 +1,19 @@
+.no-name{
+	vertical-align: middle;
+}
+
+td{
+	padding-top: 0.15rem !important;
+	padding-bottom: 0.15rem !important;
+}
+
+/* 印刷 */
+
+@media print{
+    .no-print{
+        display: none;
+    }
+    body{
+	font-size: 0.8rem;
+}
+}
