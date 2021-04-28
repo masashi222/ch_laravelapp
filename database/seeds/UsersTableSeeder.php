@@ -34,6 +34,7 @@ class UsersTableSeeder extends Seeder
             $user = new User;
             $user->name = $user_data['name'];
             $user->email = $user_data['email'];
+            // password='password'
             $user->password = $user_data['password'];
             $user->hourly_wage = $user_data['hourly_wage'];
             $user->staff_number = $user_data['staff_number'];
