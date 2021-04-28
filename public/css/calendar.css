@@ -1,0 +1,86 @@
+/* テーブル */
+#calendar table {
+	table-layout: fixed;
+}
+/* 曜日 */
+#calendar tr:nth-of-type(1) td {
+	text-align: center;
+	pointer-events: none;
+	/* フォント */
+	font-size: 0.75rem;
+	border: 1px solid #ccc;
+	border-bottom: none;
+}
+
+#calendar tr:nth-of-type(1) td:nth-of-type(1) {
+	color: red;
+}
+
+#calendar tr:nth-of-type(1) td:nth-of-type(7) {
+	color: blue;
+}
+/* 日付 */
+#calendar th {
+	padding: 0 !important;
+	border: 1px solid #ccc;
+	border-bottom: none;
+	cursor: pointer;
+	font-size: 0.75rem !important;
+}
+
+#calendar th span {
+	width: 18px;
+}
+
+#calendar td {
+	cursor: pointer;
+}
+
+#calendar th:nth-of-type(1) {
+	color: red;
+}
+
+#calendar th:nth-of-type(7) {
+	color: blue;
+}
+
+#calendar th.holiday {
+	color: red;
+}
+
+#calendar th.disabled {
+	color: #ccc;
+}
+
+#calendar th.disabled:nth-of-type(1) {
+	color: #fdd;
+}
+
+#calendar th.disabled:nth-of-type(7) {
+	color: #ddf;
+}
+/* 従業員氏名挿入の箱 */
+#calendar tr:nth-of-type(n+2) td {
+	padding: 0 !important;
+	height: 1rem !important;;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+}
+
+#calendar .staff_name {
+	/* スマホ表示対応 */
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#calendar tr:nth-of-type(n+2) td span {
+	/* フォント */
+	font-size: 0.75rem !important;
+	color: white;
+}
+
+#calendar tr:nth-of-type(5n+6) td {
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 4px !important;
+}

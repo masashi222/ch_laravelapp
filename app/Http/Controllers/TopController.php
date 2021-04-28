@@ -3,75 +3,41 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class TopController extends Controller
 {
-    public function owner() {
-        $menu_sub_shift = [
-            ['url'=>route('owner.shift'),'title'=>'シフト確認'],
-            ['url'=>route('owner.shift_period_select'),'title'=>'シフト作成']
+    public function __invoke()
+    {
+        $data_shift = [];
+        $data_attendance = [];
+        $data_user = [];
+        $data_account = [
+            ['url'=>'account','item'=>'アカウント管理'],
         ];
-        $menu_sub_attendance = [
-            ['url'=>route('owner.attendance_period_select'),'title'=>'給与確定手続き'],
-            ['url'=>route('owner.payroll_period_select'),'title'=>'給与計算書表示'],
-            ['url'=>route('owner.stamp_key'),'title'=>'勤怠打刻キー確認']
-        ];
-        $menu_sub_user = [
-            ['url'=>route('owner.user'),'title'=>'ユーザー確認']
-        ];
-        $menu_sub_account = [
-            ['url'=>'','title'=>'ログイン情報変更']
-        ];
-        return view('owner.top',['menu_sub_shift'=>$menu_sub_shift,'menu_sub_attendance'=>$menu_sub_attendance,
-            'menu_sub_user'=>$menu_sub_user,'menu_sub_account'=>$menu_sub_account
-        ]);
+        if(Gate::allows('staff-higher')){
+            // 'staff'ユーザー以上
+            $data_attendance[] = ['url'=>'attendance.period.select','item'=>'勤怠管理'];
+            $data_shift[] = ['url'=>'shift','item'=>'シフト一覧'];
+        }
+        if(Gate::allows('owner-higher')){
+            // 'owner'ユーザー以上
+            $data_attendance[] = ['url'=>'payroll.period.select','item'=>'給与計算書'];
+            $data_attendance[] = ['url'=>'stamp.key','item'=>'勤怠打刻キー表示'];
+            $data_shift[] = ['url'=>'shift.period.select','item'=>'シフト作成'];
+            $data_user[] = ['url'=>'user','item'=>'ユーザー管理'];
+        }
+        if(Gate::allows('accountant')){
+            // 'accountant'ユーザー
+            $data_attendance[] = ['url'=>'payroll.period.select','item'=>'給与計算書'];
+        }
+        if(Gate::allows('staff') || Gate::allows('admin')){
+            // 'staff''admin'ユーザーのみ
+            $data_attendance[] = ['url'=>'stamp','item'=>'勤怠打刻画面'];
+            $data_shift[] = ['url'=>'shift.submit','item'=>'シフト提出'];
+        }
+
+        return view ('top.index',['data_shift'=>$data_shift,'data_attendance'=>$data_attendance,'data_user'=>$data_user,'data_account'=>$data_account,]);
     }
 
-    public function staff() {
-        $menu_sub_shift = [
-            ['url'=>route('owner.shift'),'title'=>'シフト確認'],
-            ['url'=>route('staff.shift_submit'),'title'=>'シフト作成']
-        ];
-        $menu_sub_attendance = [
-            ['url'=>route('owner.attendance_info'),'title'=>'勤怠情報確認'],
-        ];
-        $menu_sub_account = [
-            ['url'=>'','title'=>'ログイン情報変更']
-        ];
-        return view('staff.top',['menu_sub_shift'=>$menu_sub_shift,'menu_sub_attendance'=>$menu_sub_attendance,'menu_sub_account'=>$menu_sub_account]);
-    }
-
-    public function admin() {
-        $menu_sub_shift = [
-            ['url'=>route('owner.shift'),'title'=>'シフト確認'],
-            ['url'=>route('owner.shift_period_select'),'title'=>'シフト作成']
-        ];
-        $menu_sub_attendance = [
-            ['url'=>route('owner.attendance_period_select'),'title'=>'給与確定手続き'],
-            ['url'=>route('owner.payroll_period_select'),'title'=>'給与計算書表示'],
-            ['url'=>route('owner.stamp_key'),'title'=>'勤怠打刻キー確認']
-        ];
-        $menu_sub_user = [
-            ['url'=>route('owner.user'),'title'=>'ユーザー確認']
-        ];
-        $menu_sub_owner = [
-            ['url'=>route('admin.owner'),'title'=>'オーナー確認'],
-        ];
-        $menu_sub_account = [
-            ['url'=>'','title'=>'ログイン情報変更']
-        ];
-        return view('admin.top',['menu_sub_shift'=>$menu_sub_shift,'menu_sub_attendance'=>$menu_sub_attendance,
-            'menu_sub_user'=>$menu_sub_user,'menu_sub_owner'=>$menu_sub_owner,'menu_sub_account'=>$menu_sub_account
-        ]);
-    }
-
-    public function accountant() {
-        $menu_sub_attendance = [
-            ['url'=>route('owner.payroll'),'title'=>'給与計算書表示'],
-        ];
-        $menu_sub_account = [
-            ['url'=>'','title'=>'ログイン情報変更']
-        ];
-        return view('accountant.top',['menu_sub_attendance'=>$menu_sub_attendance,'menu_sub_account'=>$menu_sub_account]);
-    }
 }

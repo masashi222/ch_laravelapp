@@ -2,39 +2,53 @@
 
 namespace App\Http\Composers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class SetForBackBtnComposer
 {
     public function compose(View $view) {
-        $data = [
-            ['name'=>'owner.shift','url'=>route('owner.top')],
-            ['name'=>'owner.shift_period_select','url'=>route('owner.top')],
-            ['name'=>'owner.shift_submit_check','url'=>route('owner.shift_period_select')],
-            ['name'=>'owner.shift_create','url'=>route('owner.shift_submit_check')],
-            ['name'=>'owner.attendance_period_select','url'=>route('owner.top')],
-            ['name'=>'owner.attendance_staff_select','url'=>route('owner.attendance_period_select')],
-            ['name'=>'owner.attendance_info','url'=>route('owner.attendance_staff_select')],
-            ['name'=>'owner.attendance_info_change','url'=>route('owner.attendance_info')],
-            ['name'=>'owner.attendance_info_register','url'=>route('owner.attendance_info')],
-            ['name'=>'owner.payroll_period_select','url'=>route('owner.top')],
-            ['name'=>'owner.payroll','url'=>route('owner.payroll_period_select')],
-            ['name'=>'owner.stamp_key','url'=>route('owner.top')],
-            ['name'=>'owner.user','url'=>route('owner.top')],
-            ['name'=>'owner.user_info_change','url'=>route('owner.user')],
-            ['name'=>'owner.user_info_register','url'=>route('owner.user')],
-            ['name'=>'staff.shift_submit','url'=>route('staff.top')],
-            ['name'=>'staff.attendance_info','url'=>route('staff.top')],
-            ['name'=>'staff.stamp','url'=>route('staff.top')],
-            ['name'=>'admin.owner','url'=>route('admin.top')],
-            ['name'=>'admin.owner_info_change','url'=>route('admin.owner')],
-            ['name'=>'admin.owner_info_register','url'=>route('admin.owner')],
-        ];
-        foreach($data as $item){
-            if($item['name'] == $view->getName()){
-                $view->with('data_url',$item['url']);
-            }else{
-                continue;
+        if(Gate::allows('accountant-higher')){
+            $data[] = ['name'=>'login.account','url'=>route('top')];
+        }
+        if(Gate::allows('staff') || Gate::allows('admin')){
+            // スタッフ権限
+            $data[] = ['name'=>'shift.submit','url'=>route('top')];
+            $data[] = ['name'=>'attendance.index','url'=>route('attendance.period.select')];
+            $data[] = ['name'=>'attendance.stamp','url'=>route('top')];
+        }
+        if(Gate::allows('staff-higher')){
+            // スタッフ権限以上
+            $data[] = ['name'=>'shift.index','url'=>route('top')];
+            $data[] = ['name'=>'attendance.period_select','url'=>route('top')];
+        }
+        if(Gate::allows('owner-higher')){
+            // オーナー権限以上
+            $data[] = ['name'=>'shift.period_select','url'=>route('top')];
+            $data[] = ['name'=>'shift.submit_status','url'=>route('shift.period.select')];
+            $data[] = ['name'=>'shift.create','url'=>route('shift.submit.status')];
+            $data[] = ['name'=>'attendance.staff_select','url'=>route('attendance.period.select')];
+            $data[] = ['name'=>'attendance.index','url'=>route('attendance.staff.select')];
+            $data[] = ['name'=>'attendance.change','url'=>route('attendance.index')];
+            $data[] = ['name'=>'attendance.register','url'=>route('attendance.index')];
+            $data[] = ['name'=>'attendance.stamp_key','url'=>route('top')];
+            $data[] = ['name'=>'user.index','url'=>route('top')];
+            $data[] = ['name'=>'user.change','url'=>route('user')];
+            $data[] = ['name'=>'user.register','url'=>route('user')];
+        }
+        if(Gate::allows('owner-higher') || Gate::allows('accountant')){
+            // オーナー権限以上と税理士権限
+            $data[] = ['name'=>'attendance.payroll_period_select','url'=>route('top')];
+            $data[] = ['name'=>'attendance.payroll','url'=>route('payroll.period.select')];
+        }
+
+        if(isset($data)){
+            foreach($data as $item){
+                if($item['name'] == $view->getName()){
+                    $view->with('href',$item['url']);
+                }else{
+                    continue;
+                }
             }
         }
     }

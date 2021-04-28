@@ -174,10 +174,12 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\AttendanceStaffSelectServiceProvider::class,
-        App\Providers\PeriodSelectFormServiceProvider::class,
+
+        /*
+         * Original Service Providers...
+         */
+        App\Providers\FormServiceProvider::class,
         App\Providers\BackBtnServiceProvider::class,
-        App\Providers\UserRegisterBtnServiceProvider::class,
 
     ],
 

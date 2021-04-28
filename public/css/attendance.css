@@ -1,0 +1,31 @@
+table {
+	font-size: 0.75rem;
+}
+
+td {
+	padding: 0.5rem 0!important;
+	vertical-align: middle;
+}
+
+/* 変更・削除ボタン */
+.change-btn, .delete-btn, #registerBtn {
+	font-size: 0.75rem;
+	padding: 2px !important;
+	border-radius: 0 !important;
+}
+
+/* スタッフタグ */
+.staff-tag{
+	width: 84px; 
+	white-space: nowrap; 
+	overflow: hidden; 
+	text-overflow: ellipsis;
+}
+
+@media screen and (min-width: 768px) {
+	.staff-tag{
+		width: auto; 
+	}
+}
+
+

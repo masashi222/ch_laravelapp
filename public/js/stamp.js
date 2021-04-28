@@ -14,5 +14,7 @@ function stampTime() {
 	$('#time').text(hourMinutes);
 }
 
-stampTime();
-setInterval(stampTime,30000);
+window.addEventListener('load',function(){
+	stampTime();
+	setInterval(stampTime,30000);
+});

@@ -7,31 +7,26 @@
 <!-- css -->
 <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
 <link rel="stylesheet" href="{{asset('css/all.min.css')}}">
-<link rel="stylesheet" href="{{asset('css/header.css')}}">
-<link rel="stylesheet" href="{{asset('css/base.css')}}">
-<link rel="stylesheet" href="{{asset('css/bootstrap4-toggle.min.css')}}">
 @yield('link')
 
 <!-- script -->
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script src="{{asset('js/jquery-3.6.0.min.js')}}"></script>
 <script src="{{asset('js/popper.min.js')}}"></script>
-<script src="{{asset('js/bootstrap4-toggle.min.js')}}"></script>
 <script src="{{asset('js/page_nav.js')}}"></script>
 @yield('script')
 </head>
 <body>
 <div class="container-fluid">
-    <div class="row bg-success no-print">
-    	<div class="col-12 clearfix header-content-wrap">
-    		@yield('header_left_content')
+    <div class="row bg-success no-print header">
+    	<div class="col py-3 clearfix">
+    		@yield('header')
     		<div class="float-end">
-    			<button type="button" class="btn btn-secondary">ログアウト</button>
+    			<a href="{{ route('logout') }}" class="btn btn-secondary">ログアウト</a>
     		</div>
     	</div>
     </div>
 	@yield('content')
 </div>
 </body>
-@yield('script')
 </html>

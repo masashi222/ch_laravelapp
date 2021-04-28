@@ -1,0 +1,1 @@
+<span class="me-3"><i class="fas fa-square me-2" style="color: {{ $unsubmitter_data['user_color'] ?? '' }};"></i>{{ $unsubmitter_data['user_name'] ?? '' }}</span>
