@@ -57,8 +57,6 @@ Route::group(['middleware' => ['auth', 'can:owner-higher']], function () {
     Route::get('/attendance/staff/select','AttendanceStaffSelectController')->name('attendance.staff.select')
     ->middleware('attendance.session.check');
     // AttendanceManagementController
-    Route::get('/attendance/userid/{userid?}', 'AttendanceManagementController@index')->name('attendance.index')
-    ->middleware('attendance.session.check');
     Route::get('/attendance/register', 'AttendanceManagementController@create')->name('attendance.create')
     ->middleware('attendance.session.check');
     Route::post('/attendance/register', 'AttendanceManagementController@store')->name('attendance.store');
@@ -84,6 +82,9 @@ Route::group(['middleware' => ['auth', 'can:staff-higher']], function () {
     // SubmitStatusController
     Route::get('/submitted', 'SubmitStatusController@submit')->name('submitted');
     Route::get('/not_submitted', 'SubmitStatusController@back')->name('not.submitted');
+    // AttendanceManagementController
+    Route::get('/attendance/userid/{userid?}', 'AttendanceManagementController@index')->name('attendance.index')
+    ->middleware('attendance.session.check');
     // AttendanceStampController
     Route::get('/stamp','AttendanceStampController@index')->name('stamp');
     Route::post('/stamp','AttendanceStampController@store')->name('stamp.store');
